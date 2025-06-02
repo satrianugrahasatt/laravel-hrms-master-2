@@ -35,20 +35,13 @@ jobs:
           ini-values: post_max_size=256M, upload_max_filesize=256M, memory_limit=512M
           coverage: xdebug
 
-      - name: Cache Composer dependencies
-        uses: actions/cache@v3
-        with:
-          path: vendor
-          key: composer-${{ hashFiles('composer.lock') }}
-          restore-keys: composer-
-
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader
 
-      - name: Copy environment file
+      - name: Copy .env for testing
         run: |
-          cp .env.example .env
-          php artisan key:generate
+          cp .env .env.testing
+          php artisan key:generate --env=testing
 
       - name: Wait for MySQL to be ready
         run: |
@@ -57,7 +50,7 @@ jobs:
             sleep 5
           done
 
-      - name: Run migrations
+      - name: Run fresh migrations
         env:
           DB_CONNECTION: mysql
           DB_HOST: 127.0.0.1
@@ -65,7 +58,7 @@ jobs:
           DB_DATABASE: fp_pso
           DB_USERNAME: root
           DB_PASSWORD: root
-        run: php artisan migrate --force
+        run: php artisan migrate:fresh --env=testing --force
 
       - name: Run PHPUnit tests
         env:
