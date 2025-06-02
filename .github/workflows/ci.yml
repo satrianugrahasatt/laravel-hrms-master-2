@@ -53,18 +53,6 @@ jobs:
       - name: Run Laravel Pint for linting
         run: ./vendor/bin/pint --test
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
-          cache: 'npm'
-
-      - name: Install frontend dependencies
-        run: npm install
-
-      - name: Build frontend assets
-        run: npm run build
-
       - name: Build backend (optimize)
         run: |
           cp .env.example .env.testing
