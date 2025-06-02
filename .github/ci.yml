@@ -28,20 +28,27 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up PHP 8.2
-        uses: shivammathur/setup-php@vv2
+        uses: shivammathur/setup-php@v2
         with:
           php-version: 8.2
           extensions: mbstring, bcmath, mysql, xml, curl, gd
           ini-values: post_max_size=256M, upload_max_filesize=256M, memory_limit=512M
           coverage: xdebug
 
+      - name: Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: vendor
+          key: composer-${{ hashFiles('composer.lock') }}
+          restore-keys: composer-
+
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader
 
-      - name: Copy .env for testing
+      - name: Copy environment file
         run: |
-          cp .env .env.testing
-          php artisan key:generate --env=testing
+          cp .env.example .env
+          php artisan key:generate
 
       - name: Wait for MySQL to be ready
         run: |
@@ -58,7 +65,7 @@ jobs:
           DB_DATABASE: fp_pso
           DB_USERNAME: root
           DB_PASSWORD: root
-        run: php artisan migrate --env=testing --force
+        run: php artisan migrate --force
 
       - name: Run PHPUnit tests
         env:
