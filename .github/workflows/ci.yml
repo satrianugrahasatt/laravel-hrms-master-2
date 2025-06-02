@@ -47,10 +47,28 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader
 
-      - name: Copy .env.example for testing
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Sesuaikan dengan versi Node.js yang dibutuhkan
+          cache: 'npm'
+
+      - name: Install frontend dependencies
+        run: npm install # Ganti dengan `yarn install` jika menggunakan Yarn
+
+      - name: Run Laravel Pint for linting
+        run: ./vendor/bin/pint --test # --test akan memeriksa tanpa mengubah file, gagal jika ada pelanggaran
+
+      - name: Build frontend assets
+        run: npm run build # Ganti dengan `npm run prod` jika menggunakan Laravel Mix
+
+      - name: Build backend (optimize)
         run: |
           cp .env.example .env.testing
           php artisan key:generate --env=testing
+          php artisan config:cache
+          php artisan route:cache
+          php artisan view:cache
 
       - name: Wait for MySQL to be ready
         run: |
