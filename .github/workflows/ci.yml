@@ -60,6 +60,16 @@ jobs:
           DB_PASSWORD: root
         run: php artisan migrate:fresh --env=testing --force
 
+      - name: Run database seeders
+        env:
+          DB_CONNECTION: mysql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
+          DB_DATABASE: fp_pso
+          DB_USERNAME: root
+          DB_PASSWORD: root
+        run: php artisan db:seed --env=testing --force
+
       - name: Run PHPUnit tests
         env:
           DB_CONNECTION: mysql
