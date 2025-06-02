@@ -38,9 +38,9 @@ jobs:
       - name: Install Composer dependencies
         run: composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader
 
-      - name: Copy .env for testing
+      - name: Copy .env.example for testing
         run: |
-          cp .env .env.testing
+          cp .env.example .env.testing
           php artisan key:generate --env=testing
 
       - name: Wait for MySQL to be ready
