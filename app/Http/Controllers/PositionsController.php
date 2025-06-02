@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePositionRequest;
 use App\Models\Log;
 use App\Models\Position;
-use Illuminate\Http\Request;
 
 class PositionsController extends Controller
 {
@@ -13,10 +12,11 @@ class PositionsController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');  
-        
+        $this->middleware('auth');
+
         $this->positions = resolve(Position::class);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -25,6 +25,7 @@ class PositionsController extends Controller
     public function index()
     {
         $positions = $this->positions->paginate();
+
         return view('pages.positions-data', compact('positions'));
     }
 
@@ -49,7 +50,7 @@ class PositionsController extends Controller
         Position::create($request->validated());
 
         Log::create([
-            'description' => auth()->user()->employee->name . " created a position named '" . $request->input('name') . "'"
+            'description' => auth()->user()->employee->name." created a position named '".$request->input('name')."'",
         ]);
 
         return redirect()->route('positions-data')->with('status', 'Successfully created a position.');
@@ -58,7 +59,6 @@ class PositionsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Position  $position
      * @return \Illuminate\Http\Response
      */
     public function show(Position $position)
@@ -69,7 +69,6 @@ class PositionsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Position  $position
      * @return \Illuminate\Http\Response
      */
     public function edit(Position $position)
@@ -81,7 +80,6 @@ class PositionsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Position  $position
      * @return \Illuminate\Http\Response
      */
     public function update(StorePositionRequest $request, Position $position)
@@ -89,7 +87,7 @@ class PositionsController extends Controller
         Position::where('id', $position->id)->update($request->validated());
 
         Log::create([
-            'description' => auth()->user()->employee->name . " updated a position's detail named '" . $position->name . "'"
+            'description' => auth()->user()->employee->name." updated a position's detail named '".$position->name."'",
         ]);
 
         return redirect()->route('positions-data')->with('status', 'Successfully updated position.');
@@ -98,7 +96,6 @@ class PositionsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Position  $position
      * @return \Illuminate\Http\Response
      */
     public function destroy(Position $position)
@@ -106,13 +103,14 @@ class PositionsController extends Controller
         Position::where('id', $position->id)->delete();
 
         Log::create([
-            'description' => auth()->user()->employee->name . " deleted a position named '" . $position->name . "'"
+            'description' => auth()->user()->employee->name." deleted a position named '".$position->name."'",
         ]);
 
         return redirect()->route('positions-data')->with('status', 'Successfully deleted a position.');
     }
 
-    public function print() {
+    public function print()
+    {
         $positions = Position::all();
 
         return view('pages.positions-data_print', compact('positions'));

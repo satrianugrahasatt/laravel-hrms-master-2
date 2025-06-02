@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Charts;
 
@@ -24,7 +24,7 @@ class AttendancesChart extends BaseChart
         $todayCheckedInCount = Attendance::where('attendance_time_id', $inId)->whereBetween('created_at', [Carbon::today(), Carbon::tomorrow()])->count();
         $yesterdayCheckedInCount = Attendance::where('attendance_time_id', $inId)->whereBetween('created_at', [Carbon::yesterday(), Carbon::today()])->count();
         $twoDaysAgoCheckedInCount = Attendance::where('attendance_time_id', $inId)->whereBetween('created_at', [Carbon::today()->subDays(2), Carbon::yesterday()])->count();
-        
+
         return Chartisan::build()
             ->labels(['Today', 'Yesterday', 'Two Days Ago'])
             ->dataset('CheckedIn', [$todayCheckedInCount, $yesterdayCheckedInCount, $twoDaysAgoCheckedInCount]);

@@ -11,7 +11,8 @@ class RecruitmentCandidate extends Model
 
     protected $guarded = [];
 
-    public function getCount() {
+    public function getCount()
+    {
         return $this->count();
     }
 }

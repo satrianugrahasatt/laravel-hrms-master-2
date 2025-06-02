@@ -42,17 +42,17 @@ class AttendanceAbsent extends Command
      */
     public function handle()
     {
-        $employees = Employee::where('is_active' , 1)->get();
+        $employees = Employee::where('is_active', 1)->get();
         $attendances = Attendance::whereBetween('created_at', [Carbon::today('Asia/Jakarta'), Carbon::tomorrow('Asia/Jakarta')])->get();
         $attendanceTimeId = AttendanceTime::whereName('OTHER')->first()->id;
-        $attendanceTypeId = AttendanceType::where('name', ["ABSENT"])->first()->id;
+        $attendanceTypeId = AttendanceType::where('name', ['ABSENT'])->first()->id;
 
-        foreach($employees as $employee) {
-            $hasCheckedIn = $attendances->contains( function ($attendance, $key) use ($employee){
+        foreach ($employees as $employee) {
+            $hasCheckedIn = $attendances->contains(function ($attendance, $key) use ($employee) {
                 return $attendance->employee_id == $employee->id;
             });
 
-            if($hasCheckedIn) {
+            if ($hasCheckedIn) {
                 continue;
             } else {
                 Attendance::create([

@@ -30,7 +30,7 @@ class AccessFactory extends Factory
             'menu_id' => function () {
                 return Menu::factory()->create()->id;
             },
-            'status' => 2
+            'status' => 2,
         ];
     }
 }

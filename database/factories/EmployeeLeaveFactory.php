@@ -27,7 +27,7 @@ class EmployeeLeaveFactory extends Factory
                 return Employee::factory()->create()->id;
             },
             'leaves_quota' => 12,
-            'used_leaves' => 0
+            'used_leaves' => 0,
         ];
     }
 }

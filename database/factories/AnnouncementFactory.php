@@ -27,7 +27,7 @@ class AnnouncementFactory extends Factory
             'description' => $this->faker->paragraph(),
             'created_by' => function () {
                 return Employee::factory()->create()->id;
-            }
+            },
         ];
     }
 }

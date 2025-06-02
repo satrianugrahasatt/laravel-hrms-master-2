@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreDepartmentRequest;
 use App\Models\Department;
 use App\Models\Log;
-use Illuminate\Http\Request;
 
 class DepartmentsController extends Controller
 {
@@ -13,10 +12,11 @@ class DepartmentsController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');  
-        
+        $this->middleware('auth');
+
         $this->departments = resolve(Department::class);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -25,6 +25,7 @@ class DepartmentsController extends Controller
     public function index()
     {
         $departments = $this->departments->paginate();
+
         return view('pages.departments-data', compact('departments'));
     }
 
@@ -49,7 +50,7 @@ class DepartmentsController extends Controller
         Department::create($request->validated());
 
         Log::create([
-            'description' => auth()->user()->employee->name . " created an department named '" . $request->input('name') . "'"
+            'description' => auth()->user()->employee->name." created an department named '".$request->input('name')."'",
         ]);
 
         return redirect()->route('departments-data')->with('status', 'Successfully created a department.');
@@ -58,7 +59,6 @@ class DepartmentsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Department  $department
      * @return \Illuminate\Http\Response
      */
     public function show(Department $department)
@@ -69,7 +69,6 @@ class DepartmentsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Department  $department
      * @return \Illuminate\Http\Response
      */
     public function edit(Department $department)
@@ -81,7 +80,6 @@ class DepartmentsController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Department  $department
      * @return \Illuminate\Http\Response
      */
     public function update(StoreDepartmentRequest $request, Department $department)
@@ -89,7 +87,7 @@ class DepartmentsController extends Controller
         Department::where('id', $department->id)->update($request->validated());
 
         Log::create([
-            'description' => auth()->user()->employee->name . " updated an department named '" . $department->name . "'"
+            'description' => auth()->user()->employee->name." updated an department named '".$department->name."'",
         ]);
 
         return redirect()->route('departments-data')->with('status', 'Successfully updated department.');
@@ -98,22 +96,23 @@ class DepartmentsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Department  $department
      * @return \Illuminate\Http\Response
      */
     public function destroy(Department $department)
     {
         Department::where('id', $department->id)->delete();
-        
+
         Log::create([
-            'description' => auth()->user()->employee->name . " deleted an department named '" . $department->name . "'"
+            'description' => auth()->user()->employee->name." deleted an department named '".$department->name."'",
         ]);
 
         return redirect()->route('departments-data')->with('status', 'Successfully deleted department.');
     }
 
-    public function print() {
+    public function print()
+    {
         $departments = Department::all();
+
         return view('pages.departments-data_print', compact('departments'));
     }
 }

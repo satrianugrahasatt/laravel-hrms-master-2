@@ -27,7 +27,7 @@ class StoreRecruitmentRequest extends FormRequest
             'position_id' => 'required|exists:positions,id',
             'title' => 'required',
             'description' => 'required',
-            'attachment' => 'nullable|max:10000'
+            'attachment' => 'nullable|max:10000',
         ];
     }
 }

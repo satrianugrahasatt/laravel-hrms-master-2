@@ -22,9 +22,10 @@ class DepartmentFactory extends Factory
     public function definition()
     {
         $name = $this->faker->word();
+
         return [
             'name' => $name,
-            'code' => function() use ($name){
+            'code' => function () use ($name) {
                 return substr($name, 0, 3);
             },
             'address' => $this->faker->streetName(),

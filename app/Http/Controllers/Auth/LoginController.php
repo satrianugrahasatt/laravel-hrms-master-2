@@ -41,19 +41,17 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-        /**
+    /**
      * Validate the user login request.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return void
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-
     protected function validateLogin(Request $request)
     {
-        $user = User::where('email',$request->email)->first();
-        if( $user && !$user->is_active){
+        $user = User::where('email', $request->email)->first();
+        if ($user && ! $user->is_active) {
             throw ValidationException::withMessages([$this->username() => __('User has been deactivated.')]);
         }
 

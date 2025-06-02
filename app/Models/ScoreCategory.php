@@ -11,7 +11,7 @@ class ScoreCategory extends Model
 
     protected $guarded = [];
 
-    public function paginate($count = 10) 
+    public function paginate($count = 10)
     {
         return $this->orderBy('id', 'ASC')->paginate($count);
     }

@@ -23,6 +23,7 @@ class RecruitmentFactory extends Factory
     public function definition()
     {
         $position = Position::factory()->create();
+
         return [
             'position_id' => $position->id,
             'title' => $position->name,

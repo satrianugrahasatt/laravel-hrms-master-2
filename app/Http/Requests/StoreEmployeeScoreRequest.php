@@ -25,7 +25,7 @@ class StoreEmployeeScoreRequest extends FormRequest
     {
         return [
             'employee_id' => 'required',
-            'categoryAndScore' => 'required'
+            'categoryAndScore' => 'required',
         ];
     }
 }

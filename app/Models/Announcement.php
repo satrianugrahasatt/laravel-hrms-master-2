@@ -12,23 +12,28 @@ class Announcement extends Model
 
     protected $guarded = [];
 
-    public function creator() {
+    public function creator()
+    {
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    public function department() {
+    public function department()
+    {
         return $this->belongsTo(Department::class);
     }
 
-    public function get($count = 3) {
+    public function get($count = 3)
+    {
         return $this->where('department_id', null)->latest()->take($count)->get();
     }
 
-    public function paginate($count = 10) {
+    public function paginate($count = 10)
+    {
         return $this->with('creator', 'department')->latest()->paginate($count);
     }
 
-    public function getCreatedAtAttribute($value) {
+    public function getCreatedAtAttribute($value)
+    {
         return Carbon::parse($value)->format('d-m-Y H:i:s');
     }
 }

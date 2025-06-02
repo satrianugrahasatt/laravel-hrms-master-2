@@ -28,7 +28,7 @@ class StorePositionRequest extends FormRequest
             'description' => 'required',
             'min_year_exp_required' => 'required',
             'salary' => 'required',
-            'open_for_recruitment' => 'boolean'
+            'open_for_recruitment' => 'boolean',
         ];
     }
 }

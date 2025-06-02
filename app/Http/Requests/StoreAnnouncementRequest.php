@@ -27,7 +27,7 @@ class StoreAnnouncementRequest extends FormRequest
             'title' => 'required|max:255',
             'description' => 'required',
             'department_id' => 'nullable|exists:departments,id',
-            'attachment' => 'nullable|max:10000'
+            'attachment' => 'nullable|max:10000',
         ];
     }
 }

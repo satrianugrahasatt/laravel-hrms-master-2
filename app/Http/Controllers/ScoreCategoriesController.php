@@ -15,7 +15,7 @@ class ScoreCategoriesController extends Controller
     {
         $this->middleware('auth');
 
-        $this->scoreCategories = resolve(ScoreCategory::class);    
+        $this->scoreCategories = resolve(ScoreCategory::class);
     }
 
     /**
@@ -26,6 +26,7 @@ class ScoreCategoriesController extends Controller
     public function index()
     {
         $scoreCategories = $this->scoreCategories->paginate();
+
         return view('pages.score-categories', compact('scoreCategories'));
     }
 
@@ -48,11 +49,11 @@ class ScoreCategoriesController extends Controller
     public function store(StoreScoreCategoryRequest $request)
     {
         ScoreCategory::create([
-            'name' => $request->input('name')
+            'name' => $request->input('name'),
         ]);
 
         Log::create([
-            'description' => auth()->user()->employee->name . " created a score category named '" . $request->input('name') . "'"
+            'description' => auth()->user()->employee->name." created a score category named '".$request->input('name')."'",
         ]);
 
         return redirect()->route('score-categories')->with('status', 'Successfully created a score category.');
@@ -61,7 +62,6 @@ class ScoreCategoriesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ScoreCategory  $scoreCategory
      * @return \Illuminate\Http\Response
      */
     public function show(ScoreCategory $scoreCategory)
@@ -72,7 +72,6 @@ class ScoreCategoriesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ScoreCategory  $scoreCategory
      * @return \Illuminate\Http\Response
      */
     public function edit(ScoreCategory $scoreCategory)
@@ -83,19 +82,17 @@ class ScoreCategoriesController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ScoreCategory  $scoreCategory
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, ScoreCategory $scoreCategory)
     {
         ScoreCategory::whereId($scoreCategory->id)
             ->update([
-            'name' => $request->input('name')
-        ]);
+                'name' => $request->input('name'),
+            ]);
 
         Log::create([
-            'description' => auth()->user()->employee->name . " updated a score category named '" . $scoreCategory->name . "' to '" . $request->input('name') . "'"
+            'description' => auth()->user()->employee->name." updated a score category named '".$scoreCategory->name."' to '".$request->input('name')."'",
         ]);
 
         return redirect()->route('score-categories')->with('status', 'Successfully updated score category.');
@@ -104,7 +101,6 @@ class ScoreCategoriesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ScoreCategory  $scoreCategory
      * @return \Illuminate\Http\Response
      */
     public function destroy(ScoreCategory $scoreCategory)
@@ -112,15 +108,16 @@ class ScoreCategoriesController extends Controller
         ScoreCategory::whereId($scoreCategory->id)->delete();
 
         Log::create([
-            'description' => auth()->user()->employee->name . " deleted a score category named '" . $scoreCategory->name . "'"
+            'description' => auth()->user()->employee->name." deleted a score category named '".$scoreCategory->name."'",
         ]);
 
         return redirect()->route('score-categories')->with('status', 'Successfully deleted score category.');
     }
 
-    public function print ()
+    public function print()
     {
         $scoreCategories = $this->scoreCategories->all();
+
         return view('pages.score-categories_print', compact('scoreCategories'));
     }
 }

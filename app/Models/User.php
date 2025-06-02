@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -21,7 +20,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role_id',
-        'is_active'
+        'is_active',
     ];
 
     /**
@@ -43,27 +42,27 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function role() 
+    public function role()
     {
         return $this->belongsTo(Role::class);
     }
 
-    public function employee () 
+    public function employee()
     {
         return $this->hasOne(Employee::class);
     }
 
-    public function paginate($count = 10) 
+    public function paginate($count = 10)
     {
         return $this->with('role')->latest()->paginate($count);
     }
 
-    public function getProfile() 
+    public function getProfile()
     {
         return $this->with('employee')->where('id', auth()->id())->first();
     }
 
-    public function isAdmin() 
+    public function isAdmin()
     {
         return $this->role->isAdmin();
     }

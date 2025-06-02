@@ -25,18 +25,18 @@ class EmployeeFactory extends Factory
     public function definition()
     {
         return [
-            'user_id' => function() {
+            'user_id' => function () {
                 return User::factory()->create()->id;
             },
             'name' => $this->faker->name(),
             'start_of_contract' => $this->faker->date(),
             'end_of_contract' => $this->faker->date(),
-            'department_id' => function() {
+            'department_id' => function () {
                 return Department::factory()->create()->id;
             },
-            'position_id' => function() {
+            'position_id' => function () {
                 return Position::factory()->create()->id;
-            }
+            },
         ];
     }
 }

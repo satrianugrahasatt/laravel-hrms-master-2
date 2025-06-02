@@ -11,28 +11,33 @@ class Attendance extends Model
     use HasFactory;
 
     protected $guarded = [];
-    
-    public function employee() {
+
+    public function employee()
+    {
         return $this->belongsTo(Employee::class);
     }
 
-    public function attendanceTime() {
+    public function attendanceTime()
+    {
         return $this->belongsTo(AttendanceTime::class);
     }
 
-    public function attendanceType() {
+    public function attendanceType()
+    {
         return $this->belongsTo(AttendanceType::class);
     }
 
-    public function paginate ($count = 10) {
-        if(auth()->user()->isAdmin()) {
+    public function paginate($count = 10)
+    {
+        if (auth()->user()->isAdmin()) {
             return $this->with('employee', 'attendanceTime', 'attendanceType')->latest()->paginate($count);
         } else {
             return $this->with('employee', 'attendanceTime', 'attendanceType')->where('employee_id', auth()->user()->employee->id)->latest()->paginate($count);
         }
     }
 
-    public function getCreatedAtAttribute($value) {
+    public function getCreatedAtAttribute($value)
+    {
         return Carbon::parse($value)->format('d-m-Y H:i:s');
     }
 }

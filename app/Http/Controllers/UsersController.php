@@ -11,10 +11,11 @@ class UsersController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');  
-        
+        $this->middleware('auth');
+
         $this->users = resolve(User::class);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -23,6 +24,7 @@ class UsersController extends Controller
     public function index()
     {
         $users = $this->users->paginate();
+
         return view('pages.users', compact('users'));
     }
 
@@ -39,7 +41,6 @@ class UsersController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -72,7 +73,6 @@ class UsersController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -95,6 +95,7 @@ class UsersController extends Controller
     public function print()
     {
         $users = User::with('role')->latest()->get();
+
         return view('pages.users_print', compact('users'));
     }
 }

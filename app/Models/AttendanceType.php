@@ -9,7 +9,8 @@ class AttendanceType extends Model
 {
     use HasFactory;
 
-    public function get() {
+    public function get()
+    {
         return $this->latest()->get();
     }
 }

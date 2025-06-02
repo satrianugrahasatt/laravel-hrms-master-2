@@ -26,7 +26,7 @@ class StoreDepartmentRequest extends FormRequest
         return [
             'name' => 'required|unique:departments,name',
             'code' => 'required|unique:departments,code|size:3',
-            'address' => 'required'
+            'address' => 'required',
         ];
     }
 }

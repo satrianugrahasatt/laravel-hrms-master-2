@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
             AttendanceSeeder::class,
             MenuSeeder::class,
             AccessSeeder::class,
-            ScoreCategorySeeder::class, 
+            ScoreCategorySeeder::class,
         ]);
     }
 }

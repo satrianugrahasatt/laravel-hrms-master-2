@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace App\Charts;
 
@@ -24,18 +24,18 @@ class PerformanceChart extends BaseChart
 
         $labels = [];
         $scores = [];
-        foreach($scoreCategories as $category) {
+        foreach ($scoreCategories as $category) {
             array_push($labels, $category->name);
 
             $employeeScores = EmployeeScore::where('score_category_id', $category->id)->whereBetween('updated_at', [Carbon::today()->subMonth(), Carbon::tomorrow()])->get();
 
-            if(empty($employeeScores)) {
+            if (empty($employeeScores)) {
                 array_push($scores, 0);
             } else {
                 $totalScore = $employeeScores->reduce(function ($total, $current) {
                     return $total + $current->score;
                 }, 0);
-    
+
                 $avgScore = $totalScore / count($employeeScores);
                 array_push($scores, $avgScore);
             }

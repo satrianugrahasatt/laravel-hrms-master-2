@@ -11,7 +11,8 @@ class EmployeeDetail extends Model
 
     protected $guarded = [];
 
-    public function employee() {
+    public function employee()
+    {
         return $this->belongsTo(Employee::class);
     }
 }

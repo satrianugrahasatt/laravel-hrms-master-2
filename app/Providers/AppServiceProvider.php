@@ -2,12 +2,10 @@
 
 namespace App\Providers;
 
-use App\Charts\AttendancesChart;
-use App\Charts\PerformanceChart;
 use App\Models\Access;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
         View::composer('*', function ($view) {
             if (auth()->check()) {
                 $accesses = resolve(Access::class)->get(true);
+
                 return $view->with('accesses', $accesses);
             }
         });

@@ -11,20 +11,23 @@ class Recruitment extends Model
 
     protected $guarded = [];
 
-    public function position () {
+    public function position()
+    {
         return $this->belongsTo(Position::class);
     }
 
-    public function recruitmentCanditate() 
+    public function recruitmentCanditate()
     {
         return $this->hasMany(RecruitmentCandidate::class);
     }
 
-    public function get() {
+    public function get()
+    {
         return $this->where('is_active', 1)->latest()->take(3)->get();
     }
 
-    public function paginate($count = 10) {
+    public function paginate($count = 10)
+    {
         return $this->with('position')->latest()->paginate($count);
     }
 }

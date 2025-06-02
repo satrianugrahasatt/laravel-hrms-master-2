@@ -29,7 +29,7 @@ class StoreEmployeeLeaveRequest extends FormRequest
             'to' => 'date|nullable|after_or_equal:from',
             'message' => 'nullable',
             'comment' => 'nullable',
-            'checked_by' => 'nullable|exists:employees,id'
+            'checked_by' => 'nullable|exists:employees,id',
         ];
     }
 }

@@ -14,10 +14,9 @@ class ScoreCategorySeeder extends Seeder
      */
     public function run()
     {
-        $scoreCategories = ["Discipline", "Hardworking"];
+        $scoreCategories = ['Discipline', 'Hardworking'];
 
-        foreach($scoreCategories as $category) 
-        {
+        foreach ($scoreCategories as $category) {
             ScoreCategory::factory()->create(['name' => $category]);
         }
     }

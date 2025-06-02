@@ -23,12 +23,13 @@ class RoleFactory extends Factory
     {
         return [
             'name' => $this->faker->word(),
-            'is_super_user' => false
+            'is_super_user' => false,
         ];
     }
 
-    public function admin() {
-        return $this->state(function($attributes) {
+    public function admin()
+    {
+        return $this->state(function ($attributes) {
             return [
                 'name' => 'Administrator',
                 'is_super_user' => true,
@@ -36,10 +37,11 @@ class RoleFactory extends Factory
         });
     }
 
-    public function user() {
-        return $this->state(function($attributes) {
+    public function user()
+    {
+        return $this->state(function ($attributes) {
             return [
-                'name' => 'User'
+                'name' => 'User',
             ];
         });
     }

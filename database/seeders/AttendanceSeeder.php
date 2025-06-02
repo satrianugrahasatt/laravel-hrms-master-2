@@ -15,16 +15,14 @@ class AttendanceSeeder extends Seeder
      */
     public function run()
     {
-        $attendanceTimes = ["IN", "OUT", "OTHER"];
-        $attendanceTypes = ["ONTIME", "LATE", "OVERTIME", "SICK", "ABSENT", "ON_LEAVE_DAYS"];
+        $attendanceTimes = ['IN', 'OUT', 'OTHER'];
+        $attendanceTypes = ['ONTIME', 'LATE', 'OVERTIME', 'SICK', 'ABSENT', 'ON_LEAVE_DAYS'];
 
-        foreach($attendanceTimes as $time) 
-        {
+        foreach ($attendanceTimes as $time) {
             AttendanceTime::factory()->create(['name' => $time]);
         }
 
-        foreach($attendanceTypes as $type)
-        {
+        foreach ($attendanceTypes as $type) {
             AttendanceType::factory()->create(['name' => $type]);
         }
     }

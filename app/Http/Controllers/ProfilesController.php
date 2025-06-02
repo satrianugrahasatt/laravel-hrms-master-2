@@ -15,10 +15,11 @@ class ProfilesController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');  
-        
+        $this->middleware('auth');
+
         $this->users = resolve(User::class);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -27,6 +28,7 @@ class ProfilesController extends Controller
     public function index()
     {
         $profile = $this->users->getProfile();
+
         return view('pages.profile', compact('profile'));
     }
 
@@ -43,7 +45,6 @@ class ProfilesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -86,12 +87,12 @@ class ProfilesController extends Controller
             ->update([
                 'name' => $request->input('name'),
                 'email' => $request->input('email'),
-                ]);
-        
+            ]);
+
         $employee = Employee::whereUserId($user->id)->first();
         $employee->update([
-                    'name' => $request->input('name'),
-                ]);
+            'name' => $request->input('name'),
+        ]);
 
         $updateArray = [
             'name' => $request->input('name'),
@@ -101,13 +102,13 @@ class ProfilesController extends Controller
         ];
 
         if ($request->has('profile')) {
-            $updateArray["photo"] = $request->file('profile')->store('photos', 'public');
+            $updateArray['photo'] = $request->file('profile')->store('photos', 'public');
         }
 
         EmployeeDetail::whereEmployeeId($employee->id)->update($updateArray);
 
         Log::create([
-            'description' => auth()->user()->employee->name . " updated profile"
+            'description' => auth()->user()->employee->name.' updated profile',
         ]);
 
         return redirect()->route('profile')->with('status', 'Successfully updated the profile.');

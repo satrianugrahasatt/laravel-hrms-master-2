@@ -11,11 +11,13 @@ class Position extends Model
 
     protected $guarded = [];
 
-    public function employees() {
+    public function employees()
+    {
         return $this->hasMany(Employee::class);
     }
 
-    public function paginate($count = 10) {
+    public function paginate($count = 10)
+    {
         return $this->latest()->paginate($count);
     }
 }
