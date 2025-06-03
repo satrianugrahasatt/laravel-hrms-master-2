@@ -7,6 +7,10 @@
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.6
 
+CREATE DATABASE fp_pso;
+USE fp_pso;
+
+
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
