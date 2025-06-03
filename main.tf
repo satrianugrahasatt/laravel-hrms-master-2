@@ -1,11 +1,11 @@
 variable "project_id" {
   description = "The Google Cloud project ID"
-  default = "feisty-reality-461020-d5"  # Ganti dengan ID proyek Anda
+  default = "feisty-reality-461020-d5"
 }
 
 variable "db_password" {
   description = "The password for the database user"
-  default = "MySecurePassword123"  # Ganti dengan password aman
+  default = ""
 }
 
 provider "google" {
@@ -14,7 +14,7 @@ provider "google" {
 }
 
 resource "google_sql_database_instance" "instance" {
-  name             = "hrms-sql-instance"
+  name             = "employeemanagement-dev"
   database_version = "MYSQL_8_0"
   region           = "us-central1"
 
