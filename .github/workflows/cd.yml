@@ -33,8 +33,10 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
 
       - name: Configure Docker to use gcloud as a credential helper
-        run: gcloud auth configure-docker --quiet
+        run: gcloud auth configure-docker gcr.io --quiet
 
+      - name: Debug Docker Config
+        run: cat ~/.docker/config.json
 
       - name: Build and Push Docker Image
         run: |
