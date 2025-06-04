@@ -38,22 +38,14 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/hrms:${{ github.sha }} .
-          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/hrms:${{ github.sha }}
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/gcr:${{ github.sha }} .
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/gcr:${{ github.sha }}
 
       - name: Deploy to Cloud Run
         run: |
           gcloud run deploy hrms-service \
-            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/hrms:${{ github.sha }} \
+            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/gcr:${{ github.sha }} \
             --platform managed \
             --region us-central1 \
             --set-env-vars DB_CONNECTION=mysql,DB_HOST=${{ secrets.CLOUD_SQL_HOST }},DB_PORT=3306,DB_DATABASE=fp_pso,DB_USERNAME=root,DB_PASSWORD=root \
             --quiet
-
-      - name: Notify on Failure
-        if: failure()
-        uses: slackapi/slack-github-action@v1.23.0
-        with:
-          slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
-          channel-id: 'your-channel-id'
-          text: 'Deployment to Cloud Run failed for commit ${{ github.sha }}'
