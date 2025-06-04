@@ -31,7 +31,14 @@ RUN php artisan config:cache && \
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Expose port 80
+# Configure Apache to listen on port 8080
+RUN sed -i 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf
+RUN sed -i 's/:80/:8080/' /etc/apache2/sites-available/000-default.conf
+
+# Enable Apache rewrite module
+RUN a2enmod rewrite
+
+# Expose port 8080
 EXPOSE 8080
 
 # Start Apache
