@@ -14,6 +14,10 @@ RUN apt-get update && apt-get install -y \
 # Install Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
+# Install Cloud SQL Proxy
+RUN wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O /usr/local/bin/cloud_sql_proxy
+RUN chmod +x /usr/local/bin/cloud_sql_proxy
+
 # Set working directory
 WORKDIR /var/www/html
 
@@ -23,7 +27,8 @@ COPY . .
 # Install Composer dependencies
 RUN composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader --no-dev
 
-# Optimize Laravel
+# Clear and re-cache Laravel configuration
+RUN php artisan config:clear
 RUN php artisan config:cache && \
     php artisan route:cache && \
     php artisan view:cache
@@ -51,5 +56,5 @@ RUN a2enmod rewrite
 # Expose port 8080
 EXPOSE 8080
 
-# Start Apache
-CMD ["apache2-foreground"]
+# Start Cloud SQL Proxy and Apache
+CMD cloud_sql_proxy -instances=feisty-reality-461020-d5:us-central1:employeemanagement-dev=tcp:3306 & apache2-foreground
